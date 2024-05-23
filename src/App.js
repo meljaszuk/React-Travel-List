@@ -19,8 +19,17 @@ export default function App() {
 
   function Form() {
     const [description, setDescription] = useState('');
-    function handleSubmit(event) {
-      event.preventDefault();
+    const [quantity, setQuantity] = useState(1);
+
+    function handleSubmit(evnt) {
+      evnt.preventDefault();
+
+      if (!description) return;
+
+      const newItem = {description, quantity, packed: false, id: Date.now()};
+
+      setDescription("");
+      setQuantity(1);
     }
 
     return (
@@ -32,9 +41,15 @@ export default function App() {
               <option value={num} key={num}>
                 {num}
               </option>
-            ))}
+            ))
+          }
         </select>
-        <input type="text" placeholder='Item...'/>
+        <input 
+          type="text" 
+          placeholder='Item...' 
+          value={description}
+          onChange={(evnt) => setDescription(evnt.target.value)}
+        />
         <button>
           Add
         </button>
