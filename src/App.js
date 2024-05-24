@@ -12,6 +12,10 @@ export default function App() {
     setItems((items) => items.filter(item => item.id !== id));
   }
 
+  function handleToggleItem(id) {
+    setItems((items) => items.map((item) => item.id === id ? {...item, packed: !item.packed} : item ))
+  }
+
   return (
     <div>
       <Logo />
@@ -47,7 +51,7 @@ export default function App() {
     return (
       <form className="add-form" onSubmit={handleSubmit}>
         <h3>What do you need for your trip?</h3>
-        <select>
+        <select value={quantity} onChange={(event) => setQuantity(Number(event.target.value))}>
           {Array.from({length: 20}, (_, i) => i + 1).map(
             (num) => (
               <option value={num} key={num}>
@@ -87,10 +91,15 @@ export default function App() {
   function Item({item, onDeleteItem}) {
     return (
       <li>
+        <input 
+          type="checkbox" 
+          value={item.packed}
+          onChange={()=>{}} 
+        />
         <span style={item.packed ? {textDecoration: "line-through"} : {}}>
           {item.quantity} {item.description}
         </span>
-        <button onClick={onDeleteItem(item.id)}>
+        <button onClick={() => onDeleteItem(item.id)}>
           ✖️
         </button>
       </li>
